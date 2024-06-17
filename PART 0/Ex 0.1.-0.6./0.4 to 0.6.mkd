@@ -1,0 +1,90 @@
+//EX 04:
+
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Escribe nota y hace clic en "Save"
+    Note right of browser: El navegador captura el evento de clic y prepara la nota para enviarla
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note (contenido de la nota)
+    activate server
+    server-->>browser: Redirección a /notes
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: El navegador empieza a ejecutar el código JavaScript que obtiene el JSON del servidor
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HI", "date": "2024-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: El navegador ejecuta la función de callback que renderiza las notas, incluida la nueva
+
+
+//EX 0.5
+
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Navega a https://studies.cs.helsinki.fi/exampleapp/spa
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: CSS file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: JavaScript file (spa.js)
+    deactivate server
+
+    Note right of browser: El navegador empieza a ejecutar el código JavaScript del spa.js
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HI 2", "date": "2024-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: El navegador ejecuta la función de callback que renderiza las notas
+
+    
+// EX 0.6
+
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Escribe nota y hace clic en "Save"
+    Note right of browser: El navegador captura el evento de clic y prepara la nota para enviarla
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa (contenido de la nota)
+    activate server
+    server-->>browser: { "message": "note created" }
+    deactivate server
+
+    Note right of browser: El navegador agrega la nueva nota al DOM sin recargar la página
+
